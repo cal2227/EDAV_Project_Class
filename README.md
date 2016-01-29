@@ -6,3 +6,6 @@ The data frame contains ***114 observations*** and ***11 variables*** describing
 ## Ideas for Analysis
 
 **1ST IDEA:** As far as we have information about the program affiliation of each student, we can map it to different skills students claim to have, demonstrating interesting statistics on which tools are more popular within certain fields of knowledge and how the choice of a primary programming language correlates with different scientific backgrounds observed over the students taking EDA&V course.
+
+
+**2ND IDEA** In addition to this, we will analyze correlation between knowledge of different tech tools. A heat map can then summarize our findings and show if there are interesting patterns in this data
