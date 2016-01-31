@@ -8,51 +8,6 @@ First project in Exploratory Data Analysis &amp; Visualisation course is targete
 The input data frame contains ***114 observations*** and ***38 variables***.
 
 We wrote a function called **tidydata** that takes in a filename (with the path of the input file) and returns a clean data frame that we can start analyzing.
-```{r}
-
-#Function that takes the survey file and returns a clean & tidy dataframe
-tidydata<-function(filename)
-{
-  library(xlsx) 
-  df<-read.xlsx(filename, 1, header=T)
-  removeCol<-c(19:38,5:11)
-  #remove unused columns
-  df<-df[,-removeCol]
-  #clean up Program column
-  table(df[,2])
-  Program<-unique(df[,2])
-  df[,2]<-replace(df[,2],df[,2]=="Ms in ds", "IDSE (master)")
-  df[,2]<-replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
-  df[,2]<-replace(df[,2],df[,2]=="Data Science", "Data Science Certification")
-  df[,2]<-replace(df[,2],df[,2]=="QMSS", "QMSS (master)")
-  df[,2]<-droplevels(df[,2])
-  #Clean up Experience with tools
-  
-  #Split the column into a list of lists
-  temp<-strsplit(as.character(df[,3]),", ")
-  #find the number of unique elements in the Experience with tools column
-  skills<-unique(unlist(temp))
-  #create a temporary data frame with 1 column for each unique skill
-  newColNames<-skills
-  skillsdf<-as.data.frame(matrix(nrow=nrow(df),ncol=20,dimnames=list(NULL,newColNames)))
-  
-  #The below for loop goes through each row in the excel file and looks at the
-  #experience with tools column. If a skill is present, then you put a 1 against that
-  #row and column in the temporary skills dataframe.
-  for (i in 1:nrow(df))
-  {
-    skillList<-temp[[i]]
-    for (j in 1:length(skillList))
-    {
-      skill<-skillList[j]
-      skillsdf[i,skill]<-1
-    }
-  }
-  #bind the temporary dataframe to the original dataframe
-  cleandf<-cbind(df,skillsdf)
-  return(cleandf)
-}
-```
 
 This function is stored as a script file named "tidydata.R" in our working directory that we need to source and run before we start the analysis.
 
@@ -60,7 +15,7 @@ This function is stored as a script file named "tidydata.R" in our working direc
 #assuming that you have set your working directory to where you downloaded the input data
 filename<-"Survey+Response.xlsx"
 source("tidydata.R")
-d<-tidydata(filename)
+df<-tidydata(filename)
 ```
 Now this data frame **df** has the data we want to start analyzing.
 
@@ -76,29 +31,4 @@ Now this data frame **df** has the data we want to start analyzing.
 **3RD IDEA** Create Exploratory Visualizations
 ** Gender & Program Plot **
 The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
-```{r message = FALSE}
-GenderProgramPlot<-function(d)
-{
-  library(ggplot2)
-  #Plotting stacked bar plot to show distribution of students in class by program    and gender
-  
-  #Create a table with counts
-  pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
-  names(pdata)<-c("Gender","Program", "Count")
-  
-  #format the x tick labels so that they wrap to the next line and not bleed
-  levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
-  
-  #ggplot code
-  ggp<-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) + 
-      geom_bar(stat = "identity") +
-      theme_bw() +
-      ggtitle("Distribution of class by Gender and Program") +
-      xlab("Program") +
-      ylab("Number of students in Program")
-  return(ggp)
-}
 
-ggp<-GenderProgramPlot(d)
-ggp
-```

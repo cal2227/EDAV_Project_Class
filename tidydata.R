@@ -15,6 +15,20 @@ tidydata<-function(filename)
   df[,2]<-replace(df[,2],df[,2]=="Data Science", "Data Science Certification")
   df[,2]<-replace(df[,2],df[,2]=="QMSS", "QMSS (master)")
   df[,2]<-droplevels(df[,2])
+  
+  #Cleanup Text Editors
+  levels(df[,6])<-c(levels(df[,6]),"Eclipse","TextWrangler","None","Any","Jupyter")
+  df[grep("Sublime Text / Eclipse",df[,6], ignore.case = FALSE),6]<- "Eclipse"
+  df[grep("Sublime",df[,6], ignore.case = TRUE),6]<-"Sublime"
+  df[grep("wrangler",df[,6], ignore.case = TRUE),6]<-"TextWrangler"
+  df[grep("eclipse",df[,6], ignore.case = TRUE),6]<-"Eclipse"
+  df[grep("haven't used any",df[,6], ignore.case = TRUE),6]<-"None"
+  df[grep("20 years ",df[,6], ignore.case = TRUE),6]<-"Any"
+  df[grep("Jupyter",df[,6], ignore.case = TRUE),6]<-"Jupyter"
+  df[grep("ipynb",df[,6], ignore.case = TRUE),6]<-"Ipython"
+  df[,6]<-droplevels(df[,6])
+  
+  
   #Clean up Experience with tools
   
   #Split the column into a list of lists
