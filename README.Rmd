@@ -57,7 +57,7 @@ This function is stored as a script file named "tidydata.R" in our working direc
 #assuming that you have set your working directory to where you downloaded the input data
 filename<-"Survey+Response.xlsx"
 source("tidydata.R")
-df<-tidydata(filename)
+d<-tidydata(filename)
 ```
 Now this data frame **df** has the data we want to start analyzing.
 
@@ -68,3 +68,28 @@ Now this data frame **df** has the data we want to start analyzing.
 
 
 **2ND IDEA** In addition to this, we will analyze correlation between knowledge of different tech tools. A heat map can then summarize our findings and show if there are interesting patterns in this data
+
+
+**3RD IDEA** Create Exploratory Visualizations
+** Gender & Program Plot **
+The below code produces a stacked bar plot showing the break down of students by gender and program, based on the clean data set we produced out of the ***tidydata.R*** function.
+```{r message = FALSE}
+library(ggplot2)
+#Plotting stacked bar plot to show distribution of students in class by program and gender
+
+#Create a table with counts
+pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
+names(pdata)<-c("Gender","Program", "Count")
+
+#format the x tick labels so that they wrap to the next line and not bleed
+levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
+
+#ggplot code
+ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) + 
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  ggtitle("Distribution of class by Gender and Program") +
+  xlab("Program") +
+  ylab("Number of students in Program")
+```
+
