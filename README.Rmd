@@ -1,3 +1,6 @@
+---
+output: pdf_document
+---
 # EDAV Project #1: "The Class"
 First project in Exploratory Data Analysis &amp; Visualisation course is targeted to analyse the data frame containing survey responses from all the students taking the class regarding their technical skills, level of familiarity with certain programming languages and frameworks as well as some demographic statistics regarding their background and school affiliation within Columbia University.
 
@@ -72,24 +75,30 @@ Now this data frame **df** has the data we want to start analyzing.
 
 **3RD IDEA** Create Exploratory Visualizations
 ** Gender & Program Plot **
-The below code produces a stacked bar plot showing the break down of students by gender and program, based on the clean data set we produced out of the ***tidydata.R*** function.
+The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
 ```{r message = FALSE}
-library(ggplot2)
-#Plotting stacked bar plot to show distribution of students in class by program and gender
+GenderProgramPlot<-function(d)
+{
+  library(ggplot2)
+  #Plotting stacked bar plot to show distribution of students in class by program    and gender
+  
+  #Create a table with counts
+  pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
+  names(pdata)<-c("Gender","Program", "Count")
+  
+  #format the x tick labels so that they wrap to the next line and not bleed
+  levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
+  
+  #ggplot code
+  ggp<-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) + 
+      geom_bar(stat = "identity") +
+      theme_bw() +
+      ggtitle("Distribution of class by Gender and Program") +
+      xlab("Program") +
+      ylab("Number of students in Program")
+  return(ggp)
+}
 
-#Create a table with counts
-pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
-names(pdata)<-c("Gender","Program", "Count")
-
-#format the x tick labels so that they wrap to the next line and not bleed
-levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
-
-#ggplot code
-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) + 
-  geom_bar(stat = "identity") +
-  theme_bw() +
-  ggtitle("Distribution of class by Gender and Program") +
-  xlab("Program") +
-  ylab("Number of students in Program")
+ggp<-GenderProgramPlot(d)
+ggp
 ```
-
