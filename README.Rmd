@@ -19,7 +19,6 @@ df<-tidydata(filename)
 ```
 Now this data frame **df** has the data we want to start analyzing.
 
-
 ## Ideas for Analysis
 
 **1ST IDEA:** As far as we have information about the program affiliation of each student, we can map it to different skills students claim to have, demonstrating interesting statistics on which tools are more popular within certain fields of knowledge and how the choice of a primary programming language correlates with different scientific backgrounds observed over the students taking EDA&V course.
@@ -32,3 +31,69 @@ Now this data frame **df** has the data we want to start analyzing.
 ** Gender & Program Plot **
 The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
 
+
+
+## Plot 1: Create Exploratory Visualizations Result "Gender and Program Plot"
+The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
+
+
+```{r echo = FALSE}
+GenderProgramPlot<-function(d)
+{
+  library(ggplot2)
+  #Plotting stacked bar plot to show distribution of students in class by program and gender
+
+  #Create a table with counts
+  pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
+  names(pdata)<-c("Gender","Program", "Count")
+
+  #format the x tick labels so that they wrap to the next line and not bleed
+  levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
+
+  #ggplot code
+  ggp<-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) +
+      geom_bar(stat = "identity") +
+      theme_bw() +
+      ggtitle("Distribution of class by Gender and Program") +
+      xlab("Program") +
+      ylab("Number of students in Program") +
+    theme(axis.text.x = element_text(size = 8 , lineheight = 0.9, hjust = 1, angle = 45)) +
+    theme(axis.text.y = element_text(size = 8))
+  return(ggp)
+}
+GenderProgramPlot(df)
+```
+
+## Plot 2:Create Exploratory Visualizations Result "TextEditor and Program Plot"
+The function TextEditorProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by text editor and program.
+
+
+```{r echo = FALSE}
+TextEditorProgramPlot<-function(d)
+{
+  library(ggplot2)
+  #Plotting stacked bar plot to show distribution of students in class by program and gender
+
+  #Create a table with counts
+  te<-data.frame(table(d$What.code.text.editor.do.you.use.most., d$Program))
+  names(te)<-c("TextEditor","Program", "Count")
+
+  #format the LEGEND labels they wrap to the next line and not bleed
+  levels(te$Program)<-gsub(" ","\n", levels(te$Program))
+  levels(te$TextEditor)<-gsub(" ","\n", levels(te$TextEditor))
+
+
+  #ggplot code
+  ggp<-ggplot(data=te, aes(x=reorder(TextEditor,-Count), y=Count, fill = Program)) +
+    geom_bar(stat = "identity") +
+    theme_bw() +
+    ggtitle("Distribution of Text Editors Used by Program") +
+    xlab("Text Editor") +
+    ylab("Counts") +
+    theme(axis.text.x = element_text(size = 8 , lineheight = 0.9, hjust = 1, angle = 45)) +
+    theme(axis.text.y = element_text(size = 8)) +
+    theme(legend.text = element_text(size = 5))
+  return(ggp)
+}
+TextEditorProgramPlot(df)
+```
