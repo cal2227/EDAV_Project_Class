@@ -7,7 +7,7 @@
 git clone git@github.com:cal2227/EDAV_Project_Class.git
 cd EDAV_Project_Class.git
 git remote -v
-git remote add upstream git@github.com:MakarAl/EDAV_Project_Class.git
+git remote add alex git@github.com:MakarAl/EDAV_Project_Class.git
 git co -b mybr 
 git br
 touch readme_notes.md
@@ -25,13 +25,15 @@ git st
 git co mybr
 git push origin mybr
 git co master
+git merge --no-ff master
+git config branch.master.mergeoptions  "--no-ff"
 git merge local
 git co mybr
-git merge --no-ff master
 git config branch.mybr.mergeoptions  "--no-ff"
+git merge master
 git co master
-git fetch upstream
-git merge upstream/master
+git fetch alex
+git merge alex/master
 ```
 
 ####From ~/.gitconfig
@@ -50,6 +52,13 @@ git merge upstream/master
 
 ####From .git/config
 ```
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+  mergeoptions = --no-ff
+[remote "alex"]
+  url = git@github.com:MakarAl/EDAV_Project_Class.git
+  fetch = +refs/heads/*:refs/remotes/alex/*
 [branch "mybr"]
   mergeoptions = --no-ff
 ```
