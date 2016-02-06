@@ -1,3 +1,5 @@
+### Learning R
+
 
 ### git
 
@@ -22,7 +24,8 @@ git ci -m ""
 git st
 git co mybr
 git push origin mybr
-git co 
+git co master
+git merge local
 
 git co master
 git fetch upstream
@@ -66,4 +69,3 @@ function git_info {
 export PS1="\$(git_info)\W $ "
 ```
 
-### Learning R
