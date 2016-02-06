@@ -1,22 +1,34 @@
 
-### Learning git
+### git
 
 git clone git@github.com:cal2227/EDAV_Project_Class.git
+cd EDAV_Project_Class.git
 git remote -v
 git remote add upstream git@github.com:MakarAl/EDAV_Project_Class.git
-git fetch upstream
-git co master
-git merge upstream/master
 git co -b mybr 
 git br
 touch readme_notes.md
 git add readme_notes.md
-git st
-cit commit -m ""
+git status
+cit ci -m ""
 vim readme_notes.md
 git ci -m ""
+git log
+git co master
+git co -b local
+vim README.md
+git ci -m ""
+git st
+git co mybr
+git push origin mybr
+
+
+git co master
+git fetch upstream
+git merge upstream/master
 
 ####~/.gitconfig
+...
 [alias]
   ad = add .
   br = branch
@@ -25,6 +37,8 @@ git ci -m ""
   st = status -s
   ci = commit -a
   lg = log --color --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset%s%Cgreen(%cr)%C(bold blue)<%an>%Creset'
+[push]
+  default = current
 ...
 
 ####~/.bashrc
