@@ -25,15 +25,15 @@ git st
 git co mybr
 git push origin mybr
 git co master
-git merge --no-ff master
+git mg --no-ff master
 git config branch.master.mergeoptions  "--no-ff"
-git merge local
+git mg local
 git co mybr
 git config branch.mybr.mergeoptions  "--no-ff"
-git merge master
+git mg master
 git co master
 git fetch alex
-git merge alex/master
+git mg alex/master
 ```
 
 ####From ~/.gitconfig
