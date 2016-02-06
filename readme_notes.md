@@ -26,13 +26,15 @@ git co mybr
 git push origin mybr
 git co master
 git merge local
-
+git co mybr
+git merge --no-ff master
+git config branch.mybr.mergeoptions  "--no-ff"
 git co master
 git fetch upstream
 git merge upstream/master
 ```
 
-####~/.gitconfig
+####From ~/.gitconfig
 ```
 [alias]
   ad = add .
@@ -46,7 +48,13 @@ git merge upstream/master
   default = current
 ```
 
-####~/.bashrc
+####From .git/config
+```
+[branch "mybr"]
+  mergeoptions = --no-ff
+```
+
+####From ~/.bashrc
 ```shell
 function parse_git_branch {
       ref=$(git symbolic-ref HEAD 2> /dev/null) || return
