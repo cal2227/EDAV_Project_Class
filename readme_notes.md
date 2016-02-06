@@ -1,7 +1,7 @@
 
 ### git
 
-```
+```shell
 git clone git@github.com:cal2227/EDAV_Project_Class.git
 cd EDAV_Project_Class.git
 git remote -v
@@ -44,7 +44,7 @@ git merge upstream/master
 ```
 
 ####~/.bashrc
-```
+```shell
 function parse_git_branch {
       ref=$(git symbolic-ref HEAD 2> /dev/null) || return
       echo ${ref#refs/heads/}
