@@ -1,6 +1,8 @@
-# R
+## R
 
-### Clean Data
+#### Clean Data
+<http://www.r-bloggers.com/r-function-of-the-day-table/>
+<http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r>
 
 ```{r, eval=FALSE}
 library(xlsx)
@@ -15,7 +17,7 @@ df[,6] <- droplevels(df[,6])
 cleandf <- cbind(df,skillsdf)
 ```
 
-### Text Editor Program Plot
+#### Text Editor Program Plot
 
 ```{r, eval=FALSE}
 te <- data.frame(table(df$What.code.text.editor.do.you.use.most., df$Program))
@@ -31,7 +33,7 @@ ggp <- ggplot(date=te, aes(x=reorder(TextEditor, -Count), y=Count, fill=Program)
 
 ```
 
-### Misc
+#### Misc
 
 ```{r, eval=FALSE}
 list.files()
