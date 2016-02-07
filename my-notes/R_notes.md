@@ -2,7 +2,9 @@
 
 #### Reference
 ```{r, eval=FALSE}
-c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS, is.na(), summary(), sort(), ifelse(), droplevels(), levels(), grep(), strsplit(), as.character(), unlist(), list(), nrow(), length(), cbind() 
+c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS,
+is.na(), summary(), sort(), ifelse(), droplevels(), levels(), grep(), 
+strsplit(), as.character(), unlist(), list(), nrow(), length(), cbind() 
 ```
 
 #### Clean Data
