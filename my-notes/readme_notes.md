@@ -9,9 +9,9 @@ Program <- unique(df[,2])
 df[,2] <- replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
 levels(df[,6]) <- c(levels(df[,6]),"Eclipse","TextWrangler","None","Any","Jupyter)
 df[,2] <- droplevels(df[,2])
-df[grep("Sublime",df[,6], ignore.case = TRUE),6]<-"Sublime"
+df[grep("Sublime",df[,6], ignore.case = TRUE),6] <- "Sublime"
 df[,6] <- droplevels(df[,6])
-cleandf<-cbind(df,skillsdf)
+cleandf <- cbind(df,skillsdf)
 ```
 
 ### git
@@ -27,18 +27,14 @@ touch readme_notes.md
 git add readme_notes.md
 git status
 cit ci -m ""
-vim readme_notes.md
-git ci -m ""
 git log
 git co master
 git co -b local
-vim README.md
-git ci -m ""
 git st
 git co mybr
 git push origin mybr
 git co master
-git mg --no-ff master
+git mg --no-ff local
 git config branch.master.mergeoptions  "--no-ff"
 git mg local
 git co mybr
