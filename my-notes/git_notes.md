@@ -1,7 +1,7 @@
 # git
 
 ```console
-git clone git@github.com:cal2227/EDAV\_Project_Class.git
+git clone git@github.com:cal2227/EDAV_Project_Class.git
 cd EDAV_Project_Class.git
 git remote -v
 git remote add alex git@github.com:MakarAl/EDAV_Project_Class.git

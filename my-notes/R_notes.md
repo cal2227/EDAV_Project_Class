@@ -1,6 +1,6 @@
 ## R
 
-#### Clean Data
+#### [Clean Data](../tidydata.R)
 <http://www.r-bloggers.com/r-function-of-the-day-table/>
 
 <http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r>
@@ -19,7 +19,7 @@ df[,6] <- droplevels(df[,6])
 cleandf <- cbind(df,skillsdf)
 ```
 
-#### Text Editor Program Plot
+#### [Text Editor Program Plot](../TextEditorProgramPlot.R)
 <https://plot.ly/ggplot2/geom_bar/>
 
 ```{r, eval=FALSE}
