@@ -1,12 +1,19 @@
 ## R
 
+#### Reference
+```{r, eval=FALSE}
+c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS, is.na(), summary(), sort(), ifelse(), droplevels(), levels(), grep(), strsplit(), as.character(), unlist(), list(), nrow(), length(), cbind() 
+```
+
 #### Clean Data
 <http://www.r-bloggers.com/r-function-of-the-day-table/>
+
 <http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r>
 
 ```{r, eval=FALSE}
 library(xlsx)
 df <- read.xlsx(filename, 1, header=T)
+df <- df[,-c(19:38,5:11)]
 table(df[,2])
 Program <- unique(df[,2])
 df[,2] <- replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
