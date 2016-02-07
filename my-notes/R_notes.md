@@ -1,12 +1,5 @@
 ## R
 
-#### Reference
-```{r, eval=FALSE}
-c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS,
-is.na(), summary(), sort(), ifelse(), droplevels(), levels(), grep(), 
-strsplit(), as.character(), unlist(), list(), nrow(), length(), cbind() 
-```
-
 #### Clean Data
 <http://www.r-bloggers.com/r-function-of-the-day-table/>
 
@@ -27,6 +20,7 @@ cleandf <- cbind(df,skillsdf)
 ```
 
 #### Text Editor Program Plot
+<https://plot.ly/ggplot2/geom_bar/>
 
 ```{r, eval=FALSE}
 te <- data.frame(table(df$What.code.text.editor.do.you.use.most., df$Program))
@@ -47,4 +41,16 @@ ggp <- ggplot(date=te, aes(x=reorder(TextEditor, -Count), y=Count, fill=Program)
 ```{r, eval=FALSE}
 list.files()
 setwd('EDAV_Project_Class')
+```
+
+#### Reference
+```{r, eval=FALSE}
+list.files(), setwd(), c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS, is.na(), summary(), sort(), ifelse(), droplevels(), 
+levels(), grep(), strsplit(), as.character(), unlist(), list(), nrow(),
+length(), cbind(), reorder()
+```
+
+#### ggplot2 Reference
+```{r, eval=FALSE}
+ggplot(), aes(), geom_bar(), theme_bw(), ggtitle(), xlab(), ylab()
 ```
