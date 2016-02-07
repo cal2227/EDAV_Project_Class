@@ -31,16 +31,13 @@ git log
 git co master
 git co -b local
 git st
-git co mybr
+git push origin mybr
 git push origin
-git co master
 git mg --no-ff local
 git config branch.master.mergeoptions  "--no-ff"
-git reset --soft origin/master
-git co mybr
 git config branch.mybr.mergeoptions  "--no-ff"
 git mg master
-git co master
+git reset --soft origin/master
 git fetch alex
 git mg alex/master
 ```
