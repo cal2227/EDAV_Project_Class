@@ -3,7 +3,15 @@
 list.files()
 setwd('EDAV_Project_Class')
 library(xlsx)
-rdf<-read.xlsx(filename, 1, header=T)
+df <- read.xlsx(filename, 1, header=T)
+table(df[,2])
+Program <- unique(df[,2])
+df[,2] <- replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
+levels(df[,6]) <- c(levels(df[,6]),"Eclipse","TextWrangler","None","Any","Jupyter)
+df[,2] <- droplevels(df[,2])
+df[grep("Sublime",df[,6], ignore.case = TRUE),6]<-"Sublime"
+df[,6] <- droplevels(df[,6])
+cleandf<-cbind(df,skillsdf)
 ```
 
 ### git
