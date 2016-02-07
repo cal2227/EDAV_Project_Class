@@ -1,5 +1,7 @@
 ## R
 
+### Notes
+
 #### [Clean Data](../tidydata.R)
 <http://www.r-bloggers.com/r-function-of-the-day-table/>
 
@@ -44,13 +46,14 @@ setwd('EDAV_Project_Class')
 ```
 
 #### Reference
+##### R
 ```{r, eval=FALSE}
 list.files(), setwd(), c(), table(), unique(), data.frame(), rnorm(), gl(), sample(), LETTERS, is.na(), summary(), sort(), ifelse(), droplevels(), 
 levels(), grep(), strsplit(), as.character(), unlist(), list(), nrow(),
 length(), cbind(), reorder()
 ```
 
-#### ggplot2 Reference
+##### ggplot2
 ```{r, eval=FALSE}
 ggplot(), aes(), geom_bar(), theme_bw(), ggtitle(), xlab(), ylab()
 ```
