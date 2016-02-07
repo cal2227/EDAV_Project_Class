@@ -1,5 +1,7 @@
 ### R
 ```{r, eval=FALSE}
+list.files()
+setwd('EDAV_Project_Class')
 library(xlsx)
 rdf<-read.xlsx(filename, 1, header=T)
 ```
