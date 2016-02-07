@@ -26,17 +26,17 @@ git br
 touch readme_notes.md
 git add readme_notes.md
 git status
-cit ci -m ""
+git ci -m ""
 git log
 git co master
 git co -b local
 git st
 git co mybr
-git push origin mybr
+git push origin
 git co master
 git mg --no-ff local
 git config branch.master.mergeoptions  "--no-ff"
-git mg local
+git reset --soft origin/master
 git co mybr
 git config branch.mybr.mergeoptions  "--no-ff"
 git mg master
