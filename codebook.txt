@@ -1,0 +1,27 @@
+EDAV Project "Class" - Codebook
+
+This codebook describes the tidy data used in the project "The Class" in the Exploratory Data Analysis and Visualization course. The raw data is gathered through the online survey across the students who picked or expressed their interest in picking this course in Spring semester 2016. The data was normilized and cleaned, all the transformational steps might be found in the tidydata.R file within this project folder. 
+
+The tidy data set contains 114 observations and 11 variables. The list of the variables with their explanation, type and possible set of values is provided below:
+
+1) waiting_list -- factor variable, 0 if the respondent was not on the waiting list, 1 if the respondent was there;
+
+2) program -- string, represents the program the respondent was affiliated with. All the answers were aggregated in the following categories: IDSE (master), DS Certification, Statistics (master), QMSS (master), Other masters and Other PhD.
+
+3) gender -- factor variable, M for male, F for female, NA for "doesn't matter" response
+
+4) text_editor -- 
+
+5) r_modelling_skill -- 
+
+6) r_graphics_skill --
+
+7) r_advanced_skill --
+
+8) r_reproduce_skill --
+
+9) matlab_skill --
+
+10) github_skill --
+
+
