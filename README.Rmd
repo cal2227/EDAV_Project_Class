@@ -1,8 +1,7 @@
 ---
-output: pdf_document
+output: html_document
 ---
-# EDAV Project #1: "The Class"
-First project in Exploratory Data Analysis &amp; Visualisation course is targeted to analyse the data frame containing survey responses from all the students taking the class regarding their technical skills, level of familiarity with certain programming languages and frameworks as well as some demographic statistics regarding their background and school affiliation within Columbia University.
+
 
 ## Reading the input files and creating a clean data set to work with
 The input data frame contains ***114 observations*** and ***38 variables***.
@@ -10,6 +9,105 @@ The input data frame contains ***114 observations*** and ***38 variables***.
 We wrote a function called **tidydata** that takes in a filename (with the path of the input file) and returns a clean data frame that we can start analyzing.
 
 This function is stored as a script file named "tidydata.R" in our working directory that we need to source and run before we start the analysis.
+
+```{r}
+#Function that takes the survey file and returns a clean & tidy dataframe
+tidydata<-function(filename)
+{
+  library(xlsx) 
+  df<-read.xlsx(filename, sheetIndex = 1, header = T, stringsAsFactors = F)
+  removeCol<-c(19:38,5:11)
+  #remove unused columns
+  df<-df[,-removeCol]
+  #regroup columns logic-wise
+  df<-df[c(1,2,5,6,4,7:11,3)]
+  
+  #clean up waiting list info
+  df[,1]<-replace(df[,1],df[,1]=="Yes",1)
+  df[,1]<-replace(df[,1],df[,1]=="No",0)
+  df[,1] <- factor(df[,1], levels = c(0,1), labels = c("No","Yes"))
+  names(df)[1] <- "waiting_list"
+  
+  #clean up Program column
+  df[,2]<-replace(df[,2],df[,2]=="Ms in ds", "IDSE (master)")
+  df[,2]<-replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
+  df[,2]<-replace(df[,2],df[,2]=="Data Science", "DS Certification")
+  df[,2]<-replace(df[,2],df[,2]=="Data Science Certification", "DS Certification")
+  df[,2]<-replace(df[,2],df[,2]=="QMSS", "Other masters")
+  df[,2]<-replace(df[,2],df[,2]=="QMSS (master)", "Other masters")
+  df[,2]<-replace(df[,2],df[,2]=="Applied Math", "Other masters")
+  df[,2]<-replace(df[,2],df[,2]=="Ph.D.", "Other PhD")
+  df[,2]<-replace(df[,2],df[,2]=="PhD Biomedical Informatics", "Other PhD")
+  df[,2]<-factor(df[,2])
+  names(df)[2] <- "program"
+  
+  #clean up gender
+  df[,3]<-replace(df[,3],df[,3]=="she/her","F")
+  df[,3]<-replace(df[,3],df[,3]=="he/him","M")
+  df[,3]<-replace(df[,3],df[,3]=="doesn't matter","NA")
+  df[,3]<-replace(df[,3],is.na(df[,3]),"NA")
+  df[,3]<-factor(df[,3])
+  names(df)[3] <- "gender"
+  
+  #clean up Text Editors
+  df[,4]<-factor(df[,4])
+  levels(df[,4])<-c(levels(df[,4]),"Eclipse","TextWrangler","None","Any","Jupyter")
+  df[grep("Sublime Text / Eclipse",df[,4], ignore.case = FALSE),4]<- "Eclipse"
+  df[grep("Sublime",df[,4], ignore.case = TRUE),4]<-"Sublime"
+  df[grep("wrangler",df[,4], ignore.case = TRUE),4]<-"TextWrangler"
+  df[grep("eclipse",df[,4], ignore.case = TRUE),4]<-"Eclipse"
+  df[grep("haven't used any",df[,4], ignore.case = TRUE),4]<-"None"
+  df[grep("20 years ",df[,4], ignore.case = TRUE),4]<-"Any"
+  df[grep("Jupyter",df[,4], ignore.case = TRUE),4]<-"Jupyter"
+  df[grep("ipynb",df[,4], ignore.case = TRUE),4]<-"Ipython"
+  df[,4]<-droplevels(df[,4])
+  names(df)[4] <- "text_editor"
+  
+  #Clean up Experience with tools
+  
+  #Split the column into a list of lists
+  df$Experiences.with.tools = factor(df$Experiences.with.tools)
+  temp<-strsplit(as.character(df$Experiences.with.tools),", ")
+  #find the number of unique elements in the Experience with tools column
+  skills<-unique(unlist(temp))
+  #create a temporary data frame with 1 column for each unique skill
+  newColNames<-skills
+  skillsdf<-as.data.frame(matrix(nrow=nrow(df), 
+                                 ncol=length(newColNames),
+                                 dimnames=list(NULL, newColNames)))
+  
+  #The below for loop goes through each row in the excel file and looks at the
+  #experience with tools column. If a skill is present, then you put a 1 against that
+  #row and column in the temporary skills dataframe.
+  for (i in 1:nrow(df))
+  {
+    skillList<-temp[[i]]
+    for (j in 1:length(skillList))
+    {
+      skill<-skillList[j]
+      skillsdf[i,skill]<-1
+    }
+  }
+  #bind the temporary dataframe to the original dataframe
+  cleandf<-cbind(df,skillsdf)
+  return(cleandf)
+}
+```
+
+The **tidydata** function does the following:
+
+1. Removes the columns that have no observations in them.
+
+2. Regrouped the columns in a logical manner.
+
+3. Organized the factor levels in the following columns
+  + Waiting List Info
+  + Gender
+  + Program
+  + Text Editors
+
+4. We split the "Experience with Tools"" column to multiple columns with a 1/0 value depending on if the skill was reported or not. Splitting the variable makes it tidy.
+
 
 ```{r message = FALSE}
 #assuming that you have set your working directory to where you downloaded the input data
@@ -19,81 +117,67 @@ df<-tidydata(filename)
 ```
 Now this data frame **df** has the data we want to start analyzing.
 
-## Ideas for Analysis
 
-**1ST IDEA:** As far as we have information about the program affiliation of each student, we can map it to different skills students claim to have, demonstrating interesting statistics on which tools are more popular within certain fields of knowledge and how the choice of a primary programming language correlates with different scientific backgrounds observed over the students taking EDA&V course.
+## Exploratory Plot #1 
+###Distribution of class by Gender & Program
+We broke down the participants of the class by gender and their program affiliation. The bar plot shows that the majority of our class either belongs to IDSE (master) or DS Certification. We have a significant representation from Statistics (mster). We also note that majority of students are male.
 
-
-**2ND IDEA** In addition to this, we will analyze correlation between knowledge of different tech tools. A heat map can then summarize our findings and show if there are interesting patterns in this data
-
-
-**3RD IDEA** Create Exploratory Visualizations
-** Gender & Program Plot **
-The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
-
-
-
-## Plot 1: Create Exploratory Visualizations Result "Gender and Program Plot"
-The function GenderProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by gender and program.
-
-
-```{r echo = FALSE}
+```{r}
 GenderProgramPlot<-function(d)
 {
   library(ggplot2)
   #Plotting stacked bar plot to show distribution of students in class by program and gender
-
+  
   #Create a table with counts
-  pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
+  pdata<-data.frame(table(d$gender, d$program))
   names(pdata)<-c("Gender","Program", "Count")
-
+  
   #format the x tick labels so that they wrap to the next line and not bleed
   levels(pdata$Program)<-gsub(" ","\n", levels(pdata$Program))
-
+  
   #ggplot code
-  ggp<-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) +
+  ggp<-ggplot(data=pdata, aes(x=reorder(Program,-Count), y=Count, fill = Gender)) + 
       geom_bar(stat = "identity") +
       theme_bw() +
       ggtitle("Distribution of class by Gender and Program") +
       xlab("Program") +
-      ylab("Number of students in Program") +
-    theme(axis.text.x = element_text(size = 8 , lineheight = 0.9, hjust = 1, angle = 45)) +
-    theme(axis.text.y = element_text(size = 8))
+      ylab("Number of students in Program")
   return(ggp)
 }
+
 GenderProgramPlot(df)
 ```
 
-## Plot 2:Create Exploratory Visualizations Result "TextEditor and Program Plot"
-The function TextEditorProgramPlot takes in the clean data frame and returns a ggplot object that will plot the break down of students by text editor and program.
+## Exploratory Plot #2
+###Text Editor use by program (histogram)
+We were curious about what text editors were most commonly used by program affiliation. We took our 4 most representative programs and plotted a histogram of counts broken down by programs.
 
-
-```{r echo = FALSE}
+```{r}
 TextEditorProgramPlot<-function(d)
 {
   library(ggplot2)
   #Plotting stacked bar plot to show distribution of students in class by program and gender
-
+  
   #Create a table with counts
-  te<-data.frame(table(d$What.code.text.editor.do.you.use.most., d$Program))
+  te<-data.frame(table(d$text_editor, d$program))
   names(te)<-c("TextEditor","Program", "Count")
-
+  te<-te[ which(te$Program!='Other PhD'),]
+  
   #format the LEGEND labels they wrap to the next line and not bleed
   levels(te$Program)<-gsub(" ","\n", levels(te$Program))
   levels(te$TextEditor)<-gsub(" ","\n", levels(te$TextEditor))
-
-
+  levels(te$TextEditor)<-gsub("Webstorm,\npycharm","Webstorm/pycharm",levels(te$TextEditor))
   #ggplot code
-  ggp<-ggplot(data=te, aes(x=reorder(TextEditor,-Count), y=Count, fill = Program)) +
+  ggp<-ggplot(data=te, aes(x=reorder(TextEditor,-Count), y=Count, fill = Program)) + 
+    facet_grid(~ Program)+
     geom_bar(stat = "identity") +
     theme_bw() +
-    ggtitle("Distribution of Text Editors Used by Program") +
+    theme(text = element_text(size = 7),axis.text.x = element_text(angle=90, vjust=1)) +
+    ggtitle("Distribution of Text Editors Used by Program") + 
     xlab("Text Editor") +
-    ylab("Counts") +
-    theme(axis.text.x = element_text(size = 8 , lineheight = 0.9, hjust = 1, angle = 45)) +
-    theme(axis.text.y = element_text(size = 8)) +
-    theme(legend.text = element_text(size = 5))
+    ylab("Counts")
   return(ggp)
 }
 TextEditorProgramPlot(df)
 ```
+

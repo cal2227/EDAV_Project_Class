@@ -4,7 +4,7 @@ GenderProgramPlot<-function(d)
   #Plotting stacked bar plot to show distribution of students in class by program and gender
   
   #Create a table with counts
-  pdata<-data.frame(table(d$What.is.your.preferred.gender.pronoun., d$Program))
+  pdata<-data.frame(table(d$gender, d$program))
   names(pdata)<-c("Gender","Program", "Count")
   
   #format the x tick labels so that they wrap to the next line and not bleed
