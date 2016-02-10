@@ -20,7 +20,7 @@ tidydata<-function(filename)
   df[,2]<-replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
   df[,2]<-replace(df[,2],df[,2]=="Data Science", "DS Certification")
   df[,2]<-replace(df[,2],df[,2]=="Data Science Certification", "DS Certification")
-  df[,2]<-replace(df[,2],df[,2]=="QMSS", "QMSS (master)")
+  df[,2]<-replace(df[,2],df[,2]=="QMSS", "Other masters")
   df[,2]<-replace(df[,2],df[,2]=="Applied Math", "Other masters")
   df[,2]<-replace(df[,2],df[,2]=="Ph.D.", "Other PhD")
   df[,2]<-replace(df[,2],df[,2]=="PhD Biomedical Informatics", "Other PhD")
@@ -52,12 +52,15 @@ tidydata<-function(filename)
   #Clean up Experience with tools
   
   #Split the column into a list of lists
-  temp<-strsplit(as.character(df[,3]),", ")
+  df$Experiences.with.tools = factor(df$Experiences.with.tools)
+  temp<-strsplit(as.character(df$Experiences.with.tools),", ")
   #find the number of unique elements in the Experience with tools column
   skills<-unique(unlist(temp))
   #create a temporary data frame with 1 column for each unique skill
   newColNames<-skills
-  skillsdf<-as.data.frame(matrix(nrow=nrow(df),ncol=20,dimnames=list(NULL,newColNames)))
+  skillsdf<-as.data.frame(matrix(nrow=nrow(df), 
+                                 ncol=length(newColNames),
+                                 dimnames=list(NULL, newColNames)))
   
   #The below for loop goes through each row in the excel file and looks at the
   #experience with tools column. If a skill is present, then you put a 1 against that
