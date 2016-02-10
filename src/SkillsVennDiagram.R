@@ -26,7 +26,7 @@ SkillsData <- function(td)
 }
 
 # Expects data sd output from SkillsData()
-SkillsDataDiagrams <- function(sd)
+SkillsDataDiagrams1 <- function(sd)
 {
   library(VennDiagram)
 
@@ -44,7 +44,7 @@ SkillsDataDiagrams <- function(sd)
   draw.triple.venn(
     area1 = individual_sum[which(individual_sum$program == level),]$uses_lay_tools,
     area2 = individual_sum[which(individual_sum$program == level),]$uses_gp_tools,
-    area3 = lay_gp_sum[which(individual_sum$program == level),]$uses_ds_tools,
+    area3 = individual_sum[which(individual_sum$program == level),]$uses_ds_tools,
     n12 = lay_gp_sum[which(lay_gp_sum$program == level),]$uses_lay_tools,
     n23 = gp_ds_sum[which(gp_ds_sum$program == level),]$uses_gp_tools,
     n13 = ds_lay_sum[which(ds_lay_sum$program == level),]$uses_ds_tools,
@@ -54,4 +54,27 @@ SkillsDataDiagrams <- function(sd)
     fill = c('skyblue', 'pink1', 'mediumorchid'))
   }
 
+}
+
+# Expects data sd output from SkillsData()
+# venns <- SkilldsDataDiagrams2(td)
+# plot(venns[[1]])
+SkillsDataDiagrams2 <- function(sd)
+{
+  library(venneuler)
+
+  # probably a better way to do this using apply()
+  venns <- list()
+  for (level in levels(sd$program))
+  {
+    area1 <- individual_sum[which(individual_sum$program == level),]$uses_lay_tools
+    area2 <- individual_sum[which(individual_sum$program == level),]$uses_gp_tools
+    area3 <- individual_sum[which(individual_sum$program == level),]$uses_ds_tools
+    n12 <- lay_gp_sum[which(lay_gp_sum$program == level),]$uses_lay_tools
+    n23 <- gp_ds_sum[which(gp_ds_sum$program == level),]$uses_gp_tools
+    n13 <- ds_lay_sum[which(ds_lay_sum$program == level),]$uses_ds_tools
+    n123 <- lay_gp_ds_sum[which(lay_gp_ds_sum$program == level),]$uses_ds_tools
+    venns <- c(venns, list(venneuler(c(A=area1, B=area2, C=area3, "A&B"=n12, "B&C"=n23, "A&C"=n13, "A&B&C"=n123))))
+  }
+  return(venns)
 }
