@@ -49,7 +49,7 @@ SkillsDataDiagrams <- function(sd)
     n23 = gp_ds_sum[which(gp_ds_sum$program == level),]$uses_gp_tools,
     n13 = ds_lay_sum[which(ds_lay_sum$program == level),]$uses_ds_tools,
     n123 = lay_gp_ds_sum[which(lay_gp_ds_sum$program == level),]$uses_ds_tools,
-    category = c('uses_lay_tools', 'uses_gp_tools', 'uses_gp_tools'),
+    category = c('uses_lay_tools', 'uses_gp_tools', 'uses_ds_tools'),
     lty = 'blank',
     fill = c('skyblue', 'pink1', 'mediumorchid'))
   }
