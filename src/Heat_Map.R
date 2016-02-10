@@ -1,4 +1,4 @@
-require(foreign )
+require(foreign)
 require(stats)
 require(gplots)
 
