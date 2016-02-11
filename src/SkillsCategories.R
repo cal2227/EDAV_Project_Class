@@ -41,24 +41,29 @@ SkillsDataDiagrams1 <- function(sd)
   #[5] "Statistics (master)
   for (level in levels(sd$program))
   {
-  draw.triple.venn(
-    area1 = individual_sum[which(individual_sum$program == level),]$uses_lay_tools,
-    area2 = individual_sum[which(individual_sum$program == level),]$uses_gp_tools,
-    area3 = individual_sum[which(individual_sum$program == level),]$uses_ds_tools,
-    n12 = lay_gp_sum[which(lay_gp_sum$program == level),]$uses_lay_tools,
-    n23 = gp_ds_sum[which(gp_ds_sum$program == level),]$uses_gp_tools,
-    n13 = ds_lay_sum[which(ds_lay_sum$program == level),]$uses_ds_tools,
-    n123 = lay_gp_ds_sum[which(lay_gp_ds_sum$program == level),]$uses_ds_tools,
-    category = c('uses_lay_tools', 'uses_gp_tools', 'uses_ds_tools'),
-    lty = 'blank',
-    fill = c('skyblue', 'pink1', 'mediumorchid'))
+    draw.triple.venn(
+      area1 = individual_sum[which(individual_sum$program == level),]$uses_lay_tools,
+      area2 = individual_sum[which(individual_sum$program == level),]$uses_gp_tools,
+      area3 = individual_sum[which(individual_sum$program == level),]$uses_ds_tools,
+      n12 = lay_gp_sum[which(lay_gp_sum$program == level),]$uses_lay_tools,
+      n23 = gp_ds_sum[which(gp_ds_sum$program == level),]$uses_gp_tools,
+      n13 = ds_lay_sum[which(ds_lay_sum$program == level),]$uses_ds_tools,
+      n123 = lay_gp_ds_sum[which(lay_gp_ds_sum$program == level),]$uses_ds_tools,
+      category = c('uses_lay_tools', 'uses_gp_tools', 'uses_ds_tools'),
+      lty = 'blank',
+      fill = c('skyblue', 'pink1', 'mediumorchid'))
   }
 
 }
 
 # Expects data sd output from SkillsData()
 # venns <- SkilldsDataDiagrams2(td)
+# par(mfrow=c(3,2))
 # plot(venns[[1]])
+# plot(venns[[2]])
+# plot(venns[[3]])
+# plot(venns[[4]])
+# plot(venns[[5]])
 SkillsDataDiagrams2 <- function(sd)
 {
   library(venneuler)
@@ -92,4 +97,17 @@ SkillsDataDiagrams2 <- function(sd)
 SkillsDataDiagrams3 <- function(sd)
 {
   library(ggplot2)
+
+  # repeat
+  lay_only_sum <- aggregate(uses_lay_tools ~ program, data=subset(sd, uses_lay_tools & !uses_gp_tools & !uses_ds_tools), sum)
+
+
+  individual_sum <- aggregate(. ~ program, data=sd, sum)
+  lay_gp_sum <- aggregate(uses_lay_tools ~ program, data=subset(sd, uses_lay_tools & uses_gp_tools), sum)
+  gp_ds_sum <- aggregate(uses_gp_tools ~ program, data=subset(sd, uses_gp_tools & uses_ds_tools), sum)
+  ds_lay_sum <- aggregate(uses_ds_tools ~ program, data=subset(sd, uses_ds_tools & uses_lay_tools), sum)
+  lay_gp_ds_sum <- aggregate(uses_ds_tools ~ program, data=subset(sd, uses_lay_tools & uses_gp_tools & uses_ds_tools), sum)
+
+
+
 }
