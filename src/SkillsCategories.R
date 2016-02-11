@@ -63,6 +63,13 @@ SkillsDataDiagrams2 <- function(sd)
 {
   library(venneuler)
 
+  # repeat
+  individual_sum <- aggregate(. ~ program, data=sd, sum)
+  lay_gp_sum <- aggregate(uses_lay_tools ~ program, data=subset(sd, uses_lay_tools & uses_gp_tools), sum)
+  gp_ds_sum <- aggregate(uses_gp_tools ~ program, data=subset(sd, uses_gp_tools & uses_ds_tools), sum)
+  ds_lay_sum <- aggregate(uses_ds_tools ~ program, data=subset(sd, uses_ds_tools & uses_lay_tools), sum)
+  lay_gp_ds_sum <- aggregate(uses_ds_tools ~ program, data=subset(sd, uses_lay_tools & uses_gp_tools & uses_ds_tools), sum)
+
   # probably a better way to do this using apply()
   venns <- list()
   for (level in levels(sd$program))
@@ -77,4 +84,12 @@ SkillsDataDiagrams2 <- function(sd)
     venns <- c(venns, list(venneuler(c(A=area1, B=area2, C=area3, "A&B"=n12, "B&C"=n23, "A&C"=n13, "A&B&C"=n123))))
   }
   return(venns)
+}
+
+# Expects data sd output from SkillsData()
+# pies <- SkilldsDataDiagrams3(td)
+# plot(pies[[1]])
+SkillsDataDiagrams3 <- function(sd)
+{
+  library(ggplot2)
 }
