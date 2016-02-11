@@ -12,7 +12,7 @@ ToolScoreProgramPlot<-function(df)
     ggp <- ggplot(data = d, aes(x = tool_score, fill = program)) + 
         geom_histogram(aes(y=..density..), binwidth = 2) + facet_grid(. ~ program) + 
         theme_bw() +
-        ggtitle("Distribution of Tool Scores Used by Program") + 
+        ggtitle("Distribution of Tool Counts Used by Program") + 
         xlab("ToolCount") +
         ylab("Density") +
         scale_y_continuous(labels = scales::percent) +
