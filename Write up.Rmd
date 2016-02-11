@@ -68,18 +68,27 @@ Speaking further, we would like to point out to another curious fact that can be
 
 We continue our analysis by exploring different toolkits that students from different programs pick to be using.
 
-##Tools
+#Tools
 As we learned in the previous chapter, the respondents come from very diverse backgrounds and, as such, have learned and been exposed to very different sets of tools. 
 
-There is a list of 16 tools, and each student was asked which of these he or she was comfortable using. As we can see in the following plot, "IDSE" and "Others" tend to know more tools on average
+The questionnaire provided a list of **20 possible choices** to pick up from, corresponding to different tools, programming languages and frameworks, and each student was asked which of these he or she was comfortable working with. The following plot shows the distribution of the number of data-related tools students from each derived program category claimed to use confidently.
 
-## Team: Verify last statement once averages are calculated
 ```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=11}
 source("src/AvgToolCount.R")
 ToolScoreProgramPlot(df)
 ```
 
-The next question we sought to answer was whether there are correlations between different sets of tools. In order to visualize this, we created a heatmap showing the correlation matrix for the top 10 tools. 
+Taking into account the number of people in each group we can say that with certain level of confidence we can treat each of these four distributions as normal. And taking a look at the means of each distribution plotted above the bars, we can extract some potentially valuable knowledge:
+
+- Master students on Data Science program on average have a knowledge of bigger amount of skills considered to be data-related compared to cirtificate students. And as we remember from the text editor preference exploration, it corresponds perfectly with the fact, that certificate students have a solid level of programming literacy, though they most probably come from different fields of IT industry and their work stack includes different programming languages and frameworks.
+- Group of students from all other programs tend to have the highest average score, which is really interesting, though might be an indicator of bigger academic experience among these students, hence broader range of used tools in data analysis. As we remember PhD students were aggregated to this category and they can be those outliers, who drive the sample average to bigger values.
+- Students from masters program in Statistics demonstrate the lowest score. This reveal can potentially correspond to the fact that Statistics program in CU lacks practical exercises and most of their time students do theoretical *(say, "paper-based")* studies and exercises and do not have substantial experience with full stack of data science programming tools.
+
+All these conclusions might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
+
+The next question we sought to answer was whether there are correlations between different sets of tools. In order to visualize this, we created a heatmap showing the correlation matrix for the top 10 tools.
+
+At first we filtered out top 10 frequently mentioned tools, as demonstrated on the chart below. Then this set of tools was used to build a pair-wise correlation heatmap, which is also provided below. The point was to identify the tools that compliment each other and typically are mentioned together.
 
 ```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=3.9, fig.width=9}
 #Show top 10 tools used (it's inside the heatmap function)
@@ -87,13 +96,15 @@ source("src/Heat_Map.R")
 FreqTools(df)
 ```
 
+The very first glance at this color map reveals that the toolset picked for further exploration is actually very versatile in terms of correlation with each other. The color scale legend in the top-left corner demnstrates that the correlation values go from -0.6 to 0.6, which says about spurious nature of this toolset and students' experience with it.
+
 ```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=6, fig.width=9}
 HeatMap(df)
 ```
 
 As we can see, SQL, Github and Terminal have the strongest correlations, meaning that people that tend to know one of these tools, on average will know how to use the other two with a higher probability than the average student.
 
-  - This result was somewhat expected. In general people with a stronger CS background will tend to know these three programs.
+  - This result was expected to a reasonable extend. In general people with a stronger CS background will tend to know these three frameworks.
 
 Interesting insights can also be observed by looking at the negative correlations seen between Python-R and between Matlab- Dropbox and Matlab-Google Drive. 
 
