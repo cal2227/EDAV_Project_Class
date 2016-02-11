@@ -127,11 +127,15 @@ Interestingly, Data Science Certificates and Statistics masters students seem to
 
 In order to understand which masters are confident with which skills, we took the analysis one step further to show with a plot this level of detail:
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=5, fig.width=5}
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=11, fig.width=11}
 #INSERT confidence lines by skills and masters here
 
-source("src/SkillsBubble3D.R")
-SkillsBubble3D(df)
+source("src/SkillsBubbles.R")
+require(gridExtra)
+plot1 <- SkillsBubbleRvM(df)
+plot2 <- SkillsBubbleRvG(df)
+plot3 <- SkillsBubbleGvM(df)
+grid.arrange(plot1, plot2, plot3, nrow = 3)
 
 ```
 

@@ -1,5 +1,6 @@
 SkillsBubble3D <- function(df) {
     library(scatterplot3d)
+    library(ggplot2)
     library(dplyr)
     
     skillsdf <- df[,c(2,5:10)]
@@ -12,7 +13,7 @@ SkillsBubble3D <- function(df) {
                              {0.2*r_modelling_skill + 0.3*r_graphics_skill + 
                                      0.4*r_advanced_skill + 0.1*r_reproduce_skill})
     skillsdf$r_skill <- round(skillsdf$r_skill * 3 / max(skillsdf$r_skill),2)
-    
+    #prepare plotting dataframe
     plotdf <- skillsdf %>%
         group_by(program) %>%
         summarize(avg_r_skill = round(mean(r_skill),2), 
@@ -20,13 +21,51 @@ SkillsBubble3D <- function(df) {
                   avg_github_skill = round(mean(github_skill),2),
                   count =  length(program))
     
-    with(plotdf, {
-        scatterplot3d(x = avg_r_skill, 
-                      y = avg_github_skill, 
-                      z = avg_matlab_skill,
-                      type = "h",
-                      color = c(1:4), pch = 19, box = T,
-                      cex.symbols = count / 10)
-    })
+#     with(plotdf, {
+#         scatterplot3d(x = avg_r_skill, 
+#                       y = avg_github_skill, 
+#                       z = avg_matlab_skill,
+#                       type = "h",
+#                       color = c(1:4), pch = 19, box = T,
+#                       cex.symbols = count / 10)
+#     })
+    
+    ggp1 <- ggplot(data = plotdf, 
+                  aes(x = avg_r_skill, y = avg_matlab_skill, 
+                      weight = count, colour = program, size = count)) +
+        geom_point(alpha = 0.8) + 
+        scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
+        theme_bw() +
+        xlab("Average R Skill") + 
+        ylab("Average Matlab Skill") +
+        scale_x_continuous(limits = c(0,2)) +
+        scale_y_continuous(limits = c(0,2)) +
+        ggtitle("R Skill vs Matlab Skill\nby Program Affiliation")
+    
+    ggp2 <- ggplot(data = plotdf, 
+                   aes(x = avg_r_skill, y = avg_github_skill, 
+                       weight = count, colour = program, size = count)) +
+        geom_point(alpha = 0.8) + 
+        scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
+        theme_bw() +
+        xlab("Average R Skill") + 
+        ylab("Average Github Skill") +
+        scale_x_continuous(limits = c(0,2)) +
+        scale_y_continuous(limits = c(0,2)) +
+        ggtitle("R Skill vs Github Skill\nby Program Affiliation")
+    
+    ggp3 <- ggplot(data = plotdf, 
+                   aes(x = avg_github_skill, y = avg_matlab_skill, 
+                       weight = count, colour = program, size = count)) +
+        geom_point(alpha = 0.8) + 
+        scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
+        theme_bw() +
+        xlab("Average Github Skill") + 
+        ylab("Average Matlab Skill") +
+        scale_x_continuous(limits = c(0,2)) +
+        scale_y_continuous(limits = c(0,2)) +
+        ggtitle("Github Skill vs Matlab Skill\nby Program Affiliation")
+    
+    return(ggp1, ggp2, ggp3)
     
 }
