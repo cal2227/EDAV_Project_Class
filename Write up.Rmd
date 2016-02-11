@@ -84,8 +84,6 @@ Taking into account the number of people in each group we can say that with cert
 - Group of students from all other programs tend to have the highest average score, which is really interesting, though might be an indicator of bigger academic experience among these students, hence broader range of used tools in data analysis. As we remember PhD students were aggregated to this category and they can be those outliers, who drive the sample average to bigger values.
 - Students from masters program in Statistics demonstrate the lowest score. This reveal can potentially correspond to the fact that Statistics program in CU lacks practical exercises and most of their time students do theoretical *(say, "paper-based")* studies and exercises and do not have substantial experience with full stack of data science programming tools.
 
-All these conclusions might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
-
 The next question we sought to answer was whether there are correlations between different sets of tools. In order to visualize this, we created a heatmap showing the correlation matrix for the top 10 tools.
 
 At first we filtered out top 10 frequently mentioned tools, as demonstrated on the chart below. Then this set of tools was used to build a pair-wise correlation heatmap, which is also provided below. The point was to identify the tools that compliment each other and typically are mentioned together.
@@ -153,10 +151,8 @@ grid.arrange(plot1, plot2, plot3, nrow = 3)
 
 ```
 
-##ADD A SUMMARY OF FINDINGS
-
-
-#Text editor preference (NOT SURE IF WE WANT TO GO INTO THIS )
+#Conclusion
+The analysis conducted throughout this paper was targeted to reveal potentially interesting directions for the further research of the topic if needed. All the conclusions drawn above might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
 
 
 

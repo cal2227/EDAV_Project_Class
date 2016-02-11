@@ -1,8 +1,0 @@
----
-title: "The Project 'Class'"
-date: "10 February 2016"
-output: pdf_document
----
-
-#Assignment 1
-
