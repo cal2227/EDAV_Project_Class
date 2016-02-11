@@ -14,14 +14,22 @@ TextEditorProgramPlot<-function(d)
   levels(te$TextEditor)<-gsub("Webstorm,\npycharm","Webstorm/pycharm",levels(te$TextEditor))
   
   #ggplot code
+  
+  sum_count <- te %>%
+      group_by(TextEditor) %>%
+      summarize(max_pos = sum(Count))
+  
   ggp<-ggplot(data=te, aes(x=reorder(TextEditor,-Count), y=Count, fill = Program)) + 
-    facet_grid(~ Program)+
+    #facet_grid(~ Program)+
     geom_bar(stat = "identity") +
     theme_bw() +
     theme(text = element_text(),axis.text.x = element_text(angle=90, vjust=1)) +
     ggtitle("Distribution of Text Editors Used by Program") + 
     xlab("Text Editor") +
-    ylab("Counts")
+    ylab("Counts") +
+    geom_text(data = sum_count, aes(x = TextEditor, y = max_pos, label = max_pos, fontface = "bold"), 
+              inherit.aes=FALSE, size = 4, vjust = -0.5) + 
+    expand_limits(y = c(0,65))
   return(ggp)
 }
 

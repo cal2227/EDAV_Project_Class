@@ -20,11 +20,12 @@ tidydata<-function(filename)
   df[,2]<-replace(df[,2],df[,2]=="MSDS", "IDSE (master)")
   df[,2]<-replace(df[,2],df[,2]=="Data Science", "DS Certification")
   df[,2]<-replace(df[,2],df[,2]=="Data Science Certification", "DS Certification")
-  df[,2]<-replace(df[,2],df[,2]=="QMSS", "Other masters")
-  df[,2]<-replace(df[,2],df[,2]=="QMSS (master)", "Other masters")
-  df[,2]<-replace(df[,2],df[,2]=="Applied Math", "Other masters")
-  df[,2]<-replace(df[,2],df[,2]=="Ph.D.", "Other PhD")
-  df[,2]<-replace(df[,2],df[,2]=="PhD Biomedical Informatics", "Other PhD")
+  df[,2]<-replace(df[,2],df[,2]=="Other masters", "Other masters & PhDs")
+  df[,2]<-replace(df[,2],df[,2]=="QMSS", "Other masters & PhDs")
+  df[,2]<-replace(df[,2],df[,2]=="QMSS (master)", "Other masters & PhDs")
+  df[,2]<-replace(df[,2],df[,2]=="Applied Math", "Other masters & PhDs")
+  df[,2]<-replace(df[,2],df[,2]=="Ph.D.", "Other masters & PhDs")
+  df[,2]<-replace(df[,2],df[,2]=="PhD Biomedical Informatics", "Other masters & PhDs")
   df[,2]<-factor(df[,2])
   names(df)[2] <- "program"
   
@@ -38,19 +39,45 @@ tidydata<-function(filename)
   
   #clean up Text Editors
   df[,4]<-factor(df[,4])
-  levels(df[,4])<-c(levels(df[,4]),"Eclipse","TextWrangler","None","Any","Jupyter")
-  df[grep("Sublime Text / Eclipse",df[,4], ignore.case = FALSE),4]<- "Eclipse"
+  levels(df[,4])<-c(levels(df[,4]),"TextWrangler","IPython","Other")
+  df[grep("Sublime Text / Eclipse",df[,4], ignore.case = FALSE),4]<- "Sublime"
   df[grep("Sublime",df[,4], ignore.case = TRUE),4]<-"Sublime"
   df[grep("wrangler",df[,4], ignore.case = TRUE),4]<-"TextWrangler"
-  df[grep("eclipse",df[,4], ignore.case = TRUE),4]<-"Eclipse"
-  df[grep("haven't used any",df[,4], ignore.case = TRUE),4]<-"None"
-  df[grep("20 years ",df[,4], ignore.case = TRUE),4]<-"Any"
-  df[grep("Jupyter",df[,4], ignore.case = TRUE),4]<-"Jupyter"
-  df[grep("ipynb",df[,4], ignore.case = TRUE),4]<-"Ipython"
+  df[grep("Ipython",df[,4], ignore.case = TRUE),4]<-"IPython"
+  df[grep("Jupyter",df[,4], ignore.case = TRUE),4]<-"IPython"
+  df[grep("ipynb",df[,4], ignore.case = TRUE),4]<-"IPython"
+  df[grep("python",df[,4], ignore.case = TRUE),4]<-"IPython"
+  df[grep("eclipse",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("haven't used any",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("20 years ",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("xcode",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("Webstorm",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("TextMate",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("Atom",df[,4], ignore.case = TRUE),4]<-"Other"
+  df[grep("Stata",df[,4], ignore.case = TRUE),4]<-"Other"
   df[,4]<-droplevels(df[,4])
   names(df)[4] <- "text_editor"
   
-  #Clean up Experience with tools
+  #clean up experience level questions
+  names(df)[5:10] <- c("r_modelling_skill",
+                       "r_graphics_skill",
+                       "r_advanced_skill",
+                       "r_reproduce_skill",
+                       "matlab_skill",
+                       "github_skill")
+  for (i in 5:10) {
+      #doing it to establish proper relationships between factor levels and make them comparable
+      df[,i]<-replace(df[,i],df[,i]=="None",0)
+      df[,i]<-replace(df[,i],df[,i]=="A little",1)
+      df[,i]<-replace(df[,i],df[,i]=="Confident",2)
+      df[,i]<-replace(df[,i],df[,i]=="Expert",3)
+    
+      df[,i] <- factor(df[,i], levels = c(0,1,2,3), 
+                       labels = c("None", "A little", "Confident", "Expert"),
+                       ordered = T)
+  }
+  
+  #clean up Experience with tools
   
   #Split the column into a list of lists
   df$Experiences.with.tools = factor(df$Experiences.with.tools)
@@ -75,9 +102,10 @@ tidydata<-function(filename)
       skillsdf[i,skill]<-1
     }
   }
+  skillsdf[is.na(skillsdf)]<-0
   #bind the temporary dataframe to the original dataframe
-  cleandf<-cbind(df,skillsdf)
-  return(cleandf)
+  df<-cbind(df[1:10],skillsdf)
+  return(df)
 }
 
 

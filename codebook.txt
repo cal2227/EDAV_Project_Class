@@ -6,22 +6,23 @@ The tidy data set contains 114 observations and 11 variables. The list of the va
 
 1) waiting_list -- factor variable, 0 if the respondent was not on the waiting list, 1 if the respondent was there;
 
-2) program -- string, represents the program the respondent was affiliated with. All the answers were aggregated in the following categories: IDSE (master), DS Certification, Statistics (master), QMSS (master), Other masters and Other PhD.
+2) program -- string, represents the program the respondent was affiliated with. All the answers were aggregated in the following categories: IDSE (master), DS Certification, Statistics (master), Other masters and Other PhD.
 
 3) gender -- factor variable, M for male, F for female, NA for "doesn't matter" response
 
-4) text_editor -- 
+4) text_editor -- string, specifies which text editor the respondent prefers most. The following significant categories were dderived: RStudio, IPython, Sublime, notepad++, vi/vim, TextWrangler, Other
 
-5) r_modelling_skill -- 
+5) r_modelling_skill -- factor variable, represents multiple-choice answer on question about general data manipulation and modelling skill in R. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
-6) r_graphics_skill --
+6) r_graphics_skill -- factor variable, represents multiple-choice answer on question about graphics and visualization skills in R with ggplot and lattice. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
-7) r_advanced_skill --
+7) r_advanced_skill -- factor variable, represents multiple-choice answer on question about advanced multivariate, spatiotemporal and other modelling techniques in R. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
-8) r_reproduce_skill --
+8) r_reproduce_skill -- factor variable, represents multiple-choice answer on question about reproducibility skills in R with Sweave/knitr/RMarkdown. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
-9) matlab_skill --
+9) matlab_skill -- factor variable, represents multiple-choice answer on question about data manipulation and modelling skills in Matlab. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
-10) github_skill --
+10) github_skill -- factor variable, represents multiple-choice answer on question about level of confidence in using git and github. Levels are "None", "A little", "Confident", "Expert"; ordered.
 
+11-30) a set of binary variables corresponding to each skill specified in multiple choice question about competency with statistical and programming tools (see their names for further reference).
 
