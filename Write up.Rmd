@@ -1,0 +1,144 @@
+---
+title: 'First assignment: The Class'
+output: pdf_document
+date: "February 10, 2016"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+#Introduction
+The first exploratory project in the Exploratory Data Analysis and Visualization focuses on the survey response dataset, acquired through the online questionnaire about statistical and technical literacy distributed among the students of EDAV class.
+
+We want to analyze the characteristics of EDAV students in terms of 3 overall dimensions: 
+
+  - Knowledge of tools
+  - Confidence in skills
+  - Preference of text editor
+  
+The data we will be working with for this assignment consists of survey responses from **114** graduate students, which are enrolled in one of the following programs:
+
+  - IDSE
+  - Data Science Certificate
+  - Statistics
+  - Others (include QMSS, Applied Math, Biomedical Informatics etc.)
+
+##Cleaning the data
+In order to work with clean and consistent data, we created a function called 'tinydata' that takes the *xlsx* file containing the raw responses and returns a consistent data frame used across all the analyses performed.
+
+Tidy data transformations are stored as a script file named `tidydata.R` in our working directory that is sourced and run before we start the analysis.
+
+In a nutshell, tidydata does the following:
+
+1. Removes the columns that have no observations in them.
+2. Regroups the columns in a logical manner.
+3. Organizes the factor levels in the following columns
+    a. Waiting List Info
+    b. Gender
+    c. Program
+    d. Text Editors
+4. Splits the "Experience with Tools"" column to multiple columns with a 1/0 value depending on if the skill was reported or not. Splitting the variable makes it tidy.
+
+The codebook for tidy dataset is provided in the project main directory (`codebook.txt`), one can refer to it regarding the information each variable, its possible values, levels etc.
+
+\pagebreak{}
+
+The distribution of respondents by program and gender is as follows:
+
+```{r, message=FALSE, results = 'hold', fig.height=4.3, fig.width=9}
+#the source code for each plot can be found in /src/ folder in main project directory
+source("src/tidydata.R")
+source("src/GenderProgramPlot.R")
+filename <- "raw/Survey+Response.xlsx"
+df <- tidydata(filename)
+GenderProgramPlot(df)
+```
+
+As it can be concluded from the chart, the men's population is considerably larger than women's in each of the programs presented on the course with relatively the same ratio across the programs. What is more, the chart allows us to judge to what extent each of the programs is presented on this course. The largest portion of students predictably comes from DSI master program since this is the core curriculum course within this master program. This block of students is followed by DSI certificate students, and the third large identified group is Master in Statistics program. However, there is 18 students more in the course whose institute affiliation is different from the programs mentioned above, varying from QMSS programs to Biomedical Informatics ones.
+
+\pagebreak{}
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=9}
+source("src/TextEditorProgramPlot.R")
+TextEditorProgramPlot(df)
+```
+
+Another set of interesting facts can be revealed from the distribution of preferred text and code editors across the programs presented on the course. As the majority of students come from data science and statistics programs, it is quite expected that the leading code editor named in the survey is RStudio, which is the leading IDE for R development. RStudio is followed Sublime, which is one of the most widespread and very universal code editors in the market right now, and surprisingly the third place is taken by vi/vim, which is a quite sophisticated command line text editing tool, which indicates that the course accommodates significant portion of students with vast programming background, besides the overal programming literacy on the course is sustainably high. Unpredictably few people selected IPython as their preferred text editor, though it is considered as a really convenient interactive tool for Python development, which is also extremely widespread for statistical calculations.
+
+Speaking further, we would like to point out to another curious fact that can be spotted on this bar chart. Proportion of Data Science certificate students who have chosen RStudio as their preferred text editor is extremely low in both absolute and relative terms compared to the other programs and the other tools. This might suggest us the following conclusion: most certificate students come from the technical or semi-technical occupations and are exposed to writing code and developing products on the regular basis. However, this activity most probably is not limited to data analysis and statistical calculations, thus RStudio does not seem to be a natural choice for them and they stick to more universal and generally accepted tools like Sublime, vi, notepad++ etc.
+
+We continue our analysis by exploring different toolkits that students from different programs pick to be using.
+
+##Tools
+As we learned in the previous chapter, the respondents come from very diverse backgrounds and, as such, have learned and been exposed to very different sets of tools. 
+
+There is a list of 16 tools, and each student was asked which of these he or she was comfortable using. As we can see in the following plot, "IDSE" and "Others" tend to know more tools on average
+
+## Team: Verify last statement once averages are calculated
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=11}
+source("src/AvgToolCount.R")
+ToolScoreProgramPlot(df)
+```
+
+The next question we sought to answer was whether there are correlations between different sets of tools. In order to visualize this, we created a heatmap showing the correlation matrix for the top 10 tools. 
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=3.9, fig.width=9}
+#Show top 10 tools used (it's inside the heatmap function)
+source("src/Heat_Map.R")
+FreqTools(df)
+```
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=6, fig.width=9}
+HeatMap(df)
+```
+
+As we can see, SQL, Github and Terminal have the strongest correlations, meaning that people that tend to know one of these tools, on average will know how to use the other two with a higher probability than the average student.
+
+  - This result was somewhat expected. In general people with a stronger CS background will tend to know these three programs.
+
+Interesting insights can also be observed by looking at the negative correlations seen between Python-R and between Matlab- Dropbox and Matlab-Google Drive. 
+
+  - We are not surprised to see a negative correlation between R and Python. In general, they can be regarded as "substitute" tools, so people can work with one without ever having to learn the other.
+  - The negative correlations between Matlab and Dropbox/Google drive are harder to explain. One potential explanation is that people that didn't know Matlab felt the need to fill in more tools, and so inputted dropbox or google drive.
+
+
+#Skillsets
+
+The next section of our work is dedicated to understand the skillsets that were reported by respondents.
+
+The survey asked respondents to grade their level of confidence in 6 different dimensions which we call "Skills". The possible responses were "None", "A little", "Confident", and "Expert". As mentioned before, we assigned values from 0 to 3 to these levels to be able to aggregate data and compute averages. It is important to mention that this score is not perfect for several reasons, starting with the fact that these are self reported levels of confidence, and equal weight is being assigned to each skill.
+
+The first exploratory analysis we did was to compute aggregated levels of confidence (called scores from here onward). The distribution of scores by skill looks as follows:
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=6, fig.width=6, fig.align='center'}
+source("src/SkillScorePieChart.R")
+SkillScorePieChart(df)
+```
+
+Not surprisingly, we see that multivariate analysis has the highest overall confidence level. Now, we wish to have a bit more insight about how these confidence levels look when grouping by masters. 
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=11}
+source("src/AvgSkillScore.R")
+SkillScoreProgramPlot(df)
+```
+
+##VERIFY next statement when data about average is available
+
+Interestingly, Data Science Certificates and Statistics masters students seem to have the lowest level of confidence in their skills.
+
+In order to understand which masters are confident with which skills, we took the analysis one step further to show with a plot this level of detail:
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=5, fig.width=5}
+#INSERT confidence lines by skills and masters here
+
+source("src/SkillsBubble3D.R")
+SkillsBubble3D(df)
+
+```
+
+##ADD A SUMMARY OF FINDINGS
+
+
+#Text editor preference (NOT SURE IF WE WANT TO GO INTO THIS )
+
+
+
