@@ -21,7 +21,7 @@ The data we will be working with for this assignment consists of survey response
   - IDSE
   - Data Science Certificate
   - Statistics
-  - Others (include QMSS, Applied Math, Biomedical Informatics etc.)
+  - Others (includes QMSS, Applied Math, Biomedical Informatics etc.)
 
 ##Cleaning the data
 In order to work with clean and consistent data, we created a function called 'tinydata' that takes the *xlsx* file containing the raw responses and returns a consistent data frame used across all the analyses performed.
@@ -54,7 +54,7 @@ df <- tidydata(filename)
 GenderProgramPlot(df)
 ```
 
-As it can be concluded from the chart, the men's population is considerably larger than women's in each of the programs presented on the course with relatively the same ratio across the programs. What is more, the chart allows us to judge to what extent each of the programs is presented on this course. The largest portion of students predictably comes from DSI master program since this is the core curriculum course within this master program. This block of students is followed by DSI certificate students, and the third large identified group is Master in Statistics program. However, there is 18 students more in the course whose institute affiliation is different from the programs mentioned above, varying from QMSS programs to Biomedical Informatics ones.
+As it can be concluded from the chart, the men's population is considerably larger than women's in each of the programs presented on the course with relatively the same ratio across the programs. What is more, the chart allows us to judge to what extent each of the programs is presented on this course. The largest portion of students predictably comes from DSI master program since this is the core curriculum course within this master program. This block of students is followed by DSI certificate students, and the third large identified group is Master in Statistics program. However, there is 18 students more in the course whose institute affiliation is different from the programs mentioned above, varying from QMSS programs and Apllied Mathematics PhD.
 
 \pagebreak{}
 
@@ -63,16 +63,16 @@ source("src/TextEditorProgramPlot.R")
 TextEditorProgramPlot(df)
 ```
 
-Another set of interesting facts can be revealed from the distribution of preferred text and code editors across the programs presented on the course. As the majority of students come from data science and statistics programs, it is quite expected that the leading code editor named in the survey is RStudio, which is the leading IDE for R development. RStudio is followed Sublime, which is one of the most widespread and very universal code editors in the market right now, and surprisingly the third place is taken by vi/vim, which is a quite sophisticated command line text editing tool, which indicates that the course accommodates significant portion of students with vast programming background, besides the overal programming literacy on the course is sustainably high. Unpredictably few people selected IPython as their preferred text editor, though it is considered as a really convenient interactive tool for Python development, which is also extremely widespread for statistical calculations.
+Another set of interesting facts can be revealed from the distribution of preferred text and code editors across the programs presented on the course. As the majority of students come from data science and statistics programs, it is quite expected that the leading code editor named in the survey is RStudio, which is the leading IDE for R development. RStudio is followed Sublime, which is one of the most widespread and very universal code editors in the market right now, and surprisingly the third place is taken by vi/vim, which is a quite sophisticated command line text editing tool, which indicates that the course accommodates significant portion of students with vast programming background, besides the overal programming literacy on the course is sustainably high. Surpisingly few people selected IPython as their preferred text editor, though it is considered as a really convenient interactive tool for Python development, which is also extremely widespread for statistical calculations.
 
 Speaking further, we would like to point out to another curious fact that can be spotted on this bar chart. Proportion of Data Science certificate students who have chosen RStudio as their preferred text editor is extremely low in both absolute and relative terms compared to the other programs and the other tools. This might suggest us the following conclusion: most certificate students come from the technical or semi-technical occupations and are exposed to writing code and developing products on the regular basis. However, this activity most probably is not limited to data analysis and statistical calculations, thus RStudio does not seem to be a natural choice for them and they stick to more universal and generally accepted tools like Sublime, vi, notepad++ etc.
 
 We continue our analysis by exploring different toolkits that students from different programs pick to be using.
 
-#Tools
-As we learned in the previous chapter, the respondents come from very diverse backgrounds and, as such, have learned and been exposed to very different sets of tools. 
+#Knowledge of Tools
+As we mentioned in the previous chapter, the respondents come from very diverse backgrounds and, as such, have learned and been exposed to very different sets of tools. 
 
-The questionnaire provided a list of **20 possible choices** to pick up from, corresponding to different tools, programming languages and frameworks, and each student was asked which of these he or she was comfortable working with. The following plot shows the distribution of the number of data-related tools students from each derived program category claimed to use confidently.
+The questionnaire provided a list of **20 possible choices** to select from, corresponding to different tools, programming languages and frameworks, and each student was asked which of these he or she was comfortable working with. Multiple selections were avaliable. As we can see in the following plot, "IDSE" and "Others" tend to know over 8 tools on average, compared to 5.7 by masters in statistics.
 
 ```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=11}
 source("src/AvgToolCount.R")
@@ -81,9 +81,9 @@ ToolScoreProgramPlot(df)
 
 Taking into account the number of people in each group we can say that with certain level of confidence we can treat each of these four distributions as normal. And taking a look at the means of each distribution plotted above the bars, we can extract some potentially valuable knowledge:
 
-- Master students on Data Science program on average have a knowledge of bigger amount of skills considered to be data-related compared to cirtificate students. And as we remember from the text editor preference exploration, it corresponds perfectly with the fact, that certificate students have a solid level of programming literacy, though they most probably come from different fields of IT industry and their work stack includes different programming languages and frameworks.
-- Group of students from all other programs tend to have the highest average score, which is really interesting, though might be an indicator of bigger academic experience among these students, hence broader range of used tools in data analysis. As we remember PhD students were aggregated to this category and they can be those outliers, who drive the sample average to bigger values.
-- Students from masters program in Statistics demonstrate the lowest score. This reveal can potentially correspond to the fact that Statistics program in CU lacks practical exercises and most of their time students do theoretical *(say, "paper-based")* studies and exercises and do not have substantial experience with full stack of data science programming tools.
+- Master students on Data Science program on average **8.1** have knowledge of bigger amount of skills considered data-related compared to certificate students. And as we remember from the text editor preference exploration, it corresponds perfectly with the fact that certificate students have a solid level of programming literacy, though they most probably come from different fields of IT industry and their work stack includes different programming languages and frameworks.
+- Group of students from all other programs tend to have the highest average score **8.3**, which is really interesting, though might be an indicator of bigger academic experience among these students, hence broader range of used tools in data analysis. As we stated previously, PhD students were aggregated to this category and they can be those outliers, who drive the sample average to bigger values.
+- Students from masters program in Statistics demonstrate the lowest score. This reveal can potentially correspond to the fact that Statistics programs focus on theoretical *(say, "paper-based")* studies and exercises and do not have substantial experience with full stack of data science programming tools.
 
 The next question we sought to answer was whether there are correlations between different sets of tools. In order to visualize this, we created a heatmap showing the correlation matrix for the top 10 tools.
 
@@ -101,14 +101,14 @@ The very first glance at this color map reveals that the toolset picked for furt
 HeatMap(df)
 ```
 
-As we can see, SQL, Github and Terminal have the strongest correlations, meaning that people that tend to know one of these tools, on average will know how to use the other two with a higher probability than the average student.
+As we can see, SQL, Github and Terminal have the strongest correlations, meaning that people that tend to know any these tools, on average will know how to use the other two with a higher probability than the average student.
 
-  - This result was expected to a reasonable extend. In general people with a stronger CS background will tend to know these three frameworks.
+  - This result was somewhat expected. In general people with a stronger CS background will tend to know these three programs.
 
 Interesting insights can also be observed by looking at the negative correlations seen between Python-R and between Matlab-Dropbox and Matlab-Google Drive. 
 
   - We are not surprised to see a negative correlation between R and Python. In general, they can be regarded as "substitute" tools, so people can work with one without ever having to learn the other.
-  - The negative correlations between Matlab and Dropbox/Google drive are harder to explain. One potential explanation is that people that didn't know Matlab felt the need to fill in more tools, and so inputted dropbox or google drive.
+  - The negative correlations between Matlab and Dropbox/Google drive are harder to explain. One potential explanation is that people that didn't know Matlab felt the need to fill in more tools, and so inputted dropbox or google drive. It is important to remember that this information is self reported, which may lead to inaccuracies and inconsistencies.
 
 #Skillsets
 
@@ -140,6 +140,14 @@ In order to understand which masters are confident with which skills, we took th
 source("src/SkillConfidenceGraph.R")
 SkillConfidenceLine(df)
 ```
+It is worth noting that most of the programs have on average somewhere close to "a little" level of confidence in the dimensions explored. However, we see some important differences across programs.
+
+  -Averages seem to be consistently close to a score of 1 (a little confident).
+  -IDSE students seem to be the most balanced program, ranking relatively similar to other masters' average.
+  -DS certificate students scored remarkably high on Github, relative to their other skills. Relative to other programs, they scored quite low in every skill with the exception of Github.
+  -Statistics students were relatively high in Graphics and multivariate analysis, but surprisingly low on Markdown, Matlab and Github (relative to what we would have expected)
+
+Finally, to understand whether these skills tend to be correlated among each other, we decided to plot bubble diagrams to add new insights. For this purpose, we grouped these skills in 3 sets: Github, Matlab, and R (R set includes Multivariate analysis, graphics, and Markdown). It is important to note that the grouping is not perfect, because not all multivariate analysis, or graphics are done in R, however, we believe that it is an acceptable way to group these skills given that R is the predominant tool that we observed (see previous analyses).
 
 The line chart connecting levels of confidence in 5 data analysis and collaboration skills allows us to compare these levels program-wise, and indeed it brings a couple of interesting points to highlight. First of all, the results are generally coherent with what was demonstrated previously, master students are more familiar with data analysis core skills compared to certificate students. However, certificate students demonstrate the highest level of expertice with git and Github, which serves as a demonstration of their industry background -- collaboration tools are the ones they feel themselves most confident with. They are making the shift towards data science in their careers, but we can clearly see the evidences of their previous experience in other field of IT industry. And finally, masters in Statistics predictably the most confident group of students in multivariate data analysis, as it is their domain of knowledge speaking in general.
 
