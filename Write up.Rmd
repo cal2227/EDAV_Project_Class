@@ -163,13 +163,15 @@ grid.arrange(plot1, plot2, plot3, nrow = 3)
 
 
 #Conclusion
-The analysis conducted throughout this paper was targeted to reveal potentially interesting directions for the further research of the topic if needed. Among these we would like to mention the following:
+The analysis conducted throughout this paper was targeted to reveal potentially interesting directions for further research of the topic if needed. Among these we would like to mention the following:
 
-- 
-- 
-- 
+- Students in Statistics masters program show high level of confidence in multivariate data analysis which concur accurately with their field of study.
 
-However, it should be noted that, all the conclusions drawn above might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
+- Students in Data Science masters and certification program demonstrated much sophistication in technological tools which can be because of their extensive experience in technology industry.
+
+- Other Masters and PhD students demonstrate highest combined mean score across various skills and that can be because the skills could be more academically oriented.
+
+However, it should be noted that, all the conclusions drawn above might be purely speculative, and these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
 
 
 
