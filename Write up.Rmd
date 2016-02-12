@@ -143,7 +143,7 @@ SkillConfidenceLine(df)
 
 The line chart connecting levels of confidence in 5 data analysis and collaboration skills allows us to compare these levels program-wise, and indeed it brings a couple of interesting points to highlight. First of all, the results are generally coherent with what was demonstrated previously, master students are more familiar with data analysis core skills compared to certificate students. However, certificate students demonstrate the highest level of expertice with git and Github, which serves as a demonstration of their industry background -- collaboration tools are the ones they feel themselves most confident with. They are making the shift towards data science in their careers, but we can clearly see the evidences of their previous experience in other field of IT industry. And finally, masters in Statistics predictably the most confident group of students in multivariate data analysis, as it is their domain of knowledge speaking in general.
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=14, fig.width=11}
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=15.5, fig.width=11}
 source("src/SkillsBubbles.R")
 require(gridExtra)
 plot1 <- SkillsBubbleRvM(df)
