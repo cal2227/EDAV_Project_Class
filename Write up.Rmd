@@ -1,5 +1,6 @@
 ---
 title: 'First assignment: The Class'
+author: '`GG Picasso` Team'
 output: pdf_document
 date: "February 10, 2016"
 ---
@@ -57,7 +58,7 @@ As it can be concluded from the chart, the men's population is considerably larg
 
 \pagebreak{}
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.3, fig.width=9}
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.6, fig.width=9}
 source("src/TextEditorProgramPlot.R")
 TextEditorProgramPlot(df)
 ```
@@ -104,11 +105,10 @@ As we can see, SQL, Github and Terminal have the strongest correlations, meaning
 
   - This result was expected to a reasonable extend. In general people with a stronger CS background will tend to know these three frameworks.
 
-Interesting insights can also be observed by looking at the negative correlations seen between Python-R and between Matlab- Dropbox and Matlab-Google Drive. 
+Interesting insights can also be observed by looking at the negative correlations seen between Python-R and between Matlab-Dropbox and Matlab-Google Drive. 
 
   - We are not surprised to see a negative correlation between R and Python. In general, they can be regarded as "substitute" tools, so people can work with one without ever having to learn the other.
   - The negative correlations between Matlab and Dropbox/Google drive are harder to explain. One potential explanation is that people that didn't know Matlab felt the need to fill in more tools, and so inputted dropbox or google drive.
-
 
 #Skillsets
 
@@ -116,9 +116,9 @@ The next section of our work is dedicated to understand the skillsets that were 
 
 The survey asked respondents to grade their level of confidence in 6 different dimensions which we call "Skills". The possible responses were "None", "A little", "Confident", and "Expert". As mentioned before, we assigned values from 0 to 3 to these levels to be able to aggregate data and compute averages. It is important to mention that this score is not perfect for several reasons, starting with the fact that these are self reported levels of confidence, and equal weight is being assigned to each skill.
 
-The first exploratory analysis we did was to compute aggregated levels of confidence (called scores from here onward). The distribution of scores by skill looks as follows:
+The first exploratory attempt we did was to compute aggregated levels of confidence (called scores from here onward). The distribution of scores by skill is described with the following pie chart:
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=6, fig.width=6, fig.align='center'}
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=6.1, fig.width=6.1, fig.align='center'}
 source("src/SkillScorePieChart.R")
 SkillScorePieChart(df)
 ```
@@ -130,18 +130,20 @@ source("src/AvgSkillScore.R")
 SkillScoreProgramPlot(df)
 ```
 
-##VERIFY next statement when data about average is available
+Another follow-up to this study direction comes from the histogram analysis of skill levels of confidence grouped by programs represented in the dataset. The logic behind this chart is almost analogous to the one behind the tool count histograms provided in the previos chapter. 
 
-Interestingly, Data Science Certificates and Statistics masters students seem to have the lowest level of confidence in their skills.
+Interestingly, Data Science Certificates and Statistics masters students seem to have the lowest level of confidence in their skills. The category of others demonstrates the highest mean in this cross-section as well, which serves as yet another proof that PhD-level students demonstrated better academic and educational background towards this course, and those observations could leverage the mean of the respective sample up being outliers in that sample of students.
 
 In order to understand which masters are confident with which skills, we took the analysis one step further to show with a plot this level of detail:
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=5, fig.width=9}
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=4.5, fig.width=9}
 source("src/SkillConfidenceGraph.R")
 SkillConfidenceLine(df)
 ```
 
-```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=11, fig.width=11}
+The line chart connecting levels of confidence in 5 data analysis and collaboration skills allows us to compare these levels program-wise, and indeed it brings a couple of interesting points to highlight. First of all, the results are generally coherent with what was demonstrated previously, master students are more familiar with data analysis core skills compared to certificate students. However, certificate students demonstrate the highest level of expertice with git and Github, which serves as a demonstration of their industry background -- collaboration tools are the ones they feel themselves most confident with. They are making the shift towards data science in their careers, but we can clearly see the evidences of their previous experience in other field of IT industry. And finally, masters in Statistics predictably the most confident group of students in multivariate data analysis, as it is their domain of knowledge speaking in general.
+
+```{r, message=FALSE, echo=FALSE, results = 'hold', fig.height=14, fig.width=11}
 source("src/SkillsBubbles.R")
 require(gridExtra)
 plot1 <- SkillsBubbleRvM(df)
@@ -151,8 +153,15 @@ grid.arrange(plot1, plot2, plot3, nrow = 3)
 
 ```
 
+
 #Conclusion
-The analysis conducted throughout this paper was targeted to reveal potentially interesting directions for the further research of the topic if needed. All the conclusions drawn above might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
+The analysis conducted throughout this paper was targeted to reveal potentially interesting directions for the further research of the topic if needed. Among these we would like to mention the following:
+
+- 
+- 
+- 
+
+However, it should be noted that, all the conclusions drawn above might be purely speculative, however these suggestions might fuel further hypotheses and experiments designed to prove or disprove these hypotheses.
 
 
 

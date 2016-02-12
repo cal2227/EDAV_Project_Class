@@ -26,6 +26,7 @@ SkillsBubbleRvM <- function(df) {
         geom_point(alpha = 0.8) + 
         scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
         theme_bw() +
+        theme(legend.position = "top") +
         xlab("Average R Skill") + 
         ylab("Average Matlab Skill") +
         scale_x_continuous(limits = c(0,2)) +
@@ -64,6 +65,7 @@ SkillsBubbleRvG <- function(df) {
         geom_point(alpha = 0.8) + 
         scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
         theme_bw() +
+        theme(legend.position = "none") +
         xlab("Average R Skill") + 
         ylab("Average Github Skill") +
         scale_x_continuous(limits = c(0,2)) +
@@ -102,6 +104,7 @@ SkillsBubbleGvM <- function(df) {
         geom_point(alpha = 0.8) + 
         scale_size_area(breaks=c(20, 30, 40, 50), "Number of respondents\non the program", max_size=30) +
         theme_bw() +
+        theme(legend.position = "none") +
         xlab("Average Github Skill") + 
         ylab("Average Matlab Skill") +
         scale_x_continuous(limits = c(0,2)) +

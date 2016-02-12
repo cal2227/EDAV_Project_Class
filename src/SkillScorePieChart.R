@@ -9,7 +9,7 @@ SkillScorePieChart <- function(df)
         d[,i] <- as.numeric(d[,i])
         d[,i] <- d[,i] - 1
     }
-    sd <- data.frame(Skill = c("Manipulation","Graphics"," Multivariate\n Analysis",
+    sd <- data.frame(Skill = c("Manipulation","Graphics","Multivariate\nAnalysis",
                                "R Markdown","Data Visualization","Github"),
                      SkillScore = colSums(d[,2:7]))
     sd$SkillPercent <- sd$SkillScore / sum(sd$SkillScore)
@@ -22,12 +22,12 @@ SkillScorePieChart <- function(df)
     ggp <- ggplot(data = sd, aes(reorder_size(sd), SkillScore, fill = Skill)) +
         geom_bar(stat = "identity", width = 1) + 
         theme_bw() + 
-        theme(text = element_text(),axis.text.x = element_text(size = 11)) +
+        theme(text = element_text(),axis.text.x = element_text(size = 9)) +
         coord_polar(theta = "x") +
         ggtitle("Pie Chart of Total Scores per Skill") + 
         scale_x_discrete(name="") + 
         geom_text(aes(x = Skill, y = 150, label = paste(round(SkillPercent*100,1),"%")), 
-                      fontface = "bold", vjust = 1.2, size = 5)
+                      fontface = "bold", vjust = 1.2, size = 3)
     
     return(ggp)
 }
